@@ -145,7 +145,6 @@ public class EfficientDocument extends Document {
 		testCase(new EfficientDocument("Sentences?!"), 3, 1, 1);
 		testCase(new EfficientDocument("Lorem ipsum dolor sit amet, qui ex choro quodsi moderatius, nam dolores explicari forensibus ad."),
 		         32, 15, 1);
-		
 	}
 	
 
