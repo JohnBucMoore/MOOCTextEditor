@@ -111,8 +111,24 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 */
 	public E remove(int index) 
 	{
-		// TODO: Implement this method
-		return null;
+		if (index < 0 || index > size-1) {
+			throw new IndexOutOfBoundsException();
+		}
+		LLNode<E> removedNode = new LLNode<E>(null);
+		LLNode<E> currNode = head.next;
+		for (int i = 0; i < index+1; i++) {
+			if (i == index) {
+				currNode.prev.next = currNode.next;
+				currNode.next.prev = currNode.prev;
+				currNode.next = null;
+				currNode.prev = null;
+				removedNode = currNode;
+				size--;
+				break;
+			}
+			currNode = currNode.next;
+		}
+		return removedNode.data;
 	}
 
 	/**
