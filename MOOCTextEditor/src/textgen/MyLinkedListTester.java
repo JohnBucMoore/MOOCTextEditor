@@ -173,7 +173,7 @@ public class MyLinkedListTester {
 			
 		}
 		try {
-			shortList.add(2, "D");
+			shortList.add(3, "D");
 			fail("Check out of bounds");
 		} catch (IndexOutOfBoundsException e) {
 			
@@ -200,7 +200,7 @@ public class MyLinkedListTester {
 		shortList.add(1, "D");
 		String D = shortList.get(1);
 		assertEquals("Add: check D is correct ", "D", D);
-		list1.add(2, 35); // list1 should be 65, 21, 35, 42, 84
+		list1.add(2, 35); // list1 should be 65, 21, 35, 42
 		int a = list1.get(2);
 		assertEquals("Add: check a is correct ", 35, a);
 		

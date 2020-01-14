@@ -29,6 +29,8 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 */
 	public boolean add(E element ) throws NullPointerException
 	{
+		add(size,element);
+		/*
 		if (element == null) {
 			throw new NullPointerException("MyLinkedList object cannot store null pointers.");
 		}
@@ -44,7 +46,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 		addedNode.prev.next = addedNode;
 		tail.prev = addedNode;
 		*/
-		size++;
+		//size++;
 		return true;
 	}
 
@@ -73,15 +75,32 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 */
 	public void add(int index, E element ) 
 	{
-		// TODO: Implement this method
+		if (element == null) {
+			throw new NullPointerException("MyLinkedList object cannot store null pointers.");
+		}
+		if (index < 0 || index > size) {
+			throw new IndexOutOfBoundsException();
+		}
+		LLNode<E> insertedNode = new LLNode<E>(element);
+		LLNode<E> currNode = head.next;
+		for (int i = 0; i < index+1; i++) {
+			if (i == index) {
+				insertedNode.next = currNode;
+				insertedNode.prev = currNode.prev;
+				currNode.prev.next = insertedNode;
+				currNode.prev = insertedNode;
+				size++;
+				break;
+			}
+			currNode = currNode.next;
+		}
 	}
 
 
 	/** Return the size of the list */
 	public int size() 
 	{
-		// TODO: Implement this method
-		return -1;
+		return size;
 	}
 
 	/** Remove a node at the specified index and return its data element.
