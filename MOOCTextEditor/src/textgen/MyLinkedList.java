@@ -17,8 +17,8 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	/** Create a new empty LinkedList */
 	public MyLinkedList() {
 		size = 0;
-		head = new ListNode<E>(null);
-		tail = new ListNode<E>(null);
+		head = new LLNode<E>(null);
+		tail = new LLNode<E>(null);
 		head.next = tail;
 		tail.prev = head;
 	}
@@ -27,17 +27,42 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 * Appends an element to the end of the list
 	 * @param element The element to add
 	 */
-	public boolean add(E element ) 
+	public boolean add(E element ) throws NullPointerException
 	{
-		// TODO: Implement this method
-		return false;
+		if (element == null) {
+			throw new NullPointerException("MyLinkedList object cannot store null pointers.");
+		}
+		LLNode<E> addedNode = new LLNode<E>(element);
+		addedNode.next = tail;
+		addedNode.prev = tail.prev;
+		tail.prev.next = addedNode;
+		tail.prev = addedNode;
+		
+		/* You may want to generalize like this
+		addedNode.prev = tail.prev;
+		addedNode.next = addedNode.prev.next;
+		addedNode.prev.next = addedNode;
+		tail.prev = addedNode;
+		*/
+		size++;
+		return true;
 	}
 
 	/** Get the element at position index 
 	 * @throws IndexOutOfBoundsException if the index is out of bounds. */
-	public E get(int index) 
+	public E get(int index) throws IndexOutOfBoundsException
 	{
-		// TODO: Implement this method.
+		if (size == 0 || index > (size-1) || index < 0) {
+			throw new IndexOutOfBoundsException();
+		}
+		LLNode<E> node = head.next;
+		for (int i = 0; i < size; i++) {
+			if (i != index) {
+				node = node.next;
+			} else if (i == index) {
+				return node.data;
+			}
+		}
 		return null;
 	}
 
