@@ -160,7 +160,49 @@ public class MyLinkedListTester {
 	@Test
 	public void testAddAtIndex()
 	{
-        // TODO: implement this test
+		try {
+			shortList.add(1, null);
+			fail("Check null pointer");
+		} catch (NullPointerException e) {
+			
+		}
+		try {
+			shortList.add(-1, "D");
+			fail("Check out of bounds");
+		} catch (IndexOutOfBoundsException e) {
+			
+		}
+		try {
+			shortList.add(2, "D");
+			fail("Check out of bounds");
+		} catch (IndexOutOfBoundsException e) {
+			
+		}
+		try {
+			list1.add(1, null);
+			fail("Check null pointer");
+		} catch (NullPointerException e) {
+			
+		}
+		try {
+			list1.add(-1, 99);
+			fail("Check out of bounds");
+		} catch (IndexOutOfBoundsException e) {
+			
+		}
+		try {
+			list1.add(5, 99);
+			fail("Check out of bounds");
+		} catch (IndexOutOfBoundsException e) {
+			
+		}
+		
+		shortList.add(1, "D");
+		String D = shortList.get(1);
+		assertEquals("Add: check D is correct ", "D", D);
+		list1.add(2, 35); // list1 should be 65, 21, 35, 42, 84
+		int a = list1.get(2);
+		assertEquals("Add: check a is correct ", 35, a);
 		
 	}
 	
