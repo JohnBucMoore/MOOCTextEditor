@@ -114,7 +114,22 @@ public class MyLinkedListTester {
 		assertEquals("Remove: check element 0 is correct ", (Integer)21, list1.get(0));
 		assertEquals("Remove: check size is correct ", 2, list1.size());
 		
-		// TODO: Add more tests here
+		try {
+			emptyList.remove(0);
+			fail("Check out of bounds");
+		} catch (IndexOutOfBoundsException e) {
+			
+		}
+		try {
+			shortList.remove(2);
+			fail("Check out of bounds");
+		} catch (IndexOutOfBoundsException e) {
+			
+		}
+		String b = shortList.remove(1);
+		assertEquals("Remove: check b is correct ", "B", b);
+		assertEquals("Remove: check element 0 is correct ", "A", shortList.get(0));
+		assertEquals("Remove: check size is correct ", 1, shortList.size());
 	}
 	
 	/** Test adding an element into the end of the list, specifically
@@ -148,7 +163,14 @@ public class MyLinkedListTester {
 	@Test
 	public void testSize()
 	{
-		// TODO: implement this test
+		int a = emptyList.size();
+		assertEquals("Size: check a is correct ", 0, a);
+		int b = shortList.size();
+		assertEquals("Size: check b is correct ", 2, b);
+		int c = longerList.size();
+		assertEquals("Size: check c is correct ", 10, c);
+		int d = list1.size();
+		assertEquals("Size: check d is correct ", 3, d);
 	}
 
 	
