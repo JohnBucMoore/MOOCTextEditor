@@ -123,8 +123,24 @@ public class MyLinkedListTester {
 	@Test
 	public void testAddEnd()
 	{
-        // TODO: implement this test
-		
+		try {
+			shortList.add(null);
+			fail("Check null pointer");
+		} catch (NullPointerException e) {
+			
+		}
+		try {
+			list1.add(null);
+			fail("Check null pointer");
+		} catch (NullPointerException e) {
+			
+		}
+		shortList.add("C");
+		String C = shortList.get(2);
+		assertEquals("Add: check C is correct ", "C", C);
+		list1.add(84);
+		int a = list1.get(3);
+		assertEquals("Add: check a is correct ", 84, a);
 	}
 
 	
