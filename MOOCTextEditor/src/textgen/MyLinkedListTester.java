@@ -232,8 +232,40 @@ public class MyLinkedListTester {
 	@Test
 	public void testSet()
 	{
-	    // TODO: implement this test
+	    try {
+	    	emptyList.set(0, 42);
+	    	fail("Check out of bounds");
+	    } catch (IndexOutOfBoundsException e) {
+	    	
+	    }
+	    try {
+	    	shortList.set(1, null);
+	    	fail("Check null pointer");
+	    } catch (NullPointerException e) {
+	    	
+	    }
+	    try {
+	    	list1.set(3,84);
+	    	fail("Check out of bounds");
+	    } catch (IndexOutOfBoundsException e) {
+	    	
+	    }
+	    try {
+	    	list1.set(2,null);
+	    	fail("Check null pointer");
+	    } catch (NullPointerException e) {
+	    	
+	    }
 	    
+	    int a = list1.set(1,12);
+	    assertEquals("Check a is correct ", 21, a);
+	    assertEquals("Check size is correct ", 3, list1.size());
+	    assertEquals("Check data is correct ", (Integer)12, list1.get(1));
+	    
+	    String b = shortList.set(1, "C");
+	    assertEquals("Check b is correct ", "B", b);
+	    assertEquals("Check size is correct ", 2, shortList.size());
+	    assertEquals("Check data is correct ", "C", shortList.get(1));
 	}
 	
 	

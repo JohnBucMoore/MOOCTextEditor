@@ -140,7 +140,21 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 */
 	public E set(int index, E element) 
 	{
-		// TODO: Implement this method
+		if (index < 0 || index > size-1) {
+			throw new IndexOutOfBoundsException();
+		}
+		if (element == null) {
+			throw new NullPointerException();
+		}
+		LLNode<E> currNode = head.next;
+		for (int i = 0; i < index+1; i++) {
+			if (i == index) {
+				E oldVal = currNode.data;
+				currNode.data = element;
+				return oldVal;
+			}
+			currNode = currNode.next;
+		}
 		return null;
 	}   
 }
