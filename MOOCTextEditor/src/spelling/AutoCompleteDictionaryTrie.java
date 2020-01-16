@@ -39,10 +39,7 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	 */
 	public boolean addWord(String word)
 	{	
-		//check if the dictionary already contains the word
-		if (isWord(word)) {
-			return false;
-		} else if (word == null) {
+		if (word == null) {
 			throw new NullPointerException();
 		}
 		
@@ -63,20 +60,40 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 			}
 			
 			//set end of word
-			if (i == word.length() - 1) {
+			if (i == word.length() - 1 && next.endsWord()) {
+				return false;
+			} else if (i == word.length() - 1 && !next.endsWord()) {
 				next.setEndsWord(true);
 			}
 		}
 		return true;
 	}
 	
+	
+	private int countWords(TrieNode curr) {
+		
+		if (curr == null) {
+			return size;
+		}
+	 		 		
+	 	TrieNode next = null;
+ 		for (Character c : curr.getValidNextCharacters()) {
+ 			next = curr.getChild(c);
+ 			if (next.endsWord()) {
+ 				size++;
+ 				//System.out.println(next.getText() + "\t" + size);
+ 			}
+ 			countWords(next);
+ 		}
+ 		return size;
+	}
 	/** 
 	 * Return the number of words in the dictionary.  This is NOT necessarily the same
 	 * as the number of TrieNodes in the trie.
 	 */
 	public int size()
 	{
-	    return 0;
+	    return countWords(root);
 	}
 	
 	
@@ -85,6 +102,7 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	@Override
 	public boolean isWord(String s) 
 	{	
+		s = s.toLowerCase();
 		TrieNode curr = root;
 		TrieNode next = new TrieNode();
 		for (int i = 0; i < s.length(); i++) {
