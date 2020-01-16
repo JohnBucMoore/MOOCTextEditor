@@ -47,14 +47,15 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 		}
 		
 		word = word.toLowerCase();
+		TrieNode curr = root;
 		TrieNode next = new TrieNode();
 		for (int i = 0; i < word.length(); i++) {
 			char c = word.charAt(i);
 			
-			if (i == 0 && root.getChild(c) == null) {
-				next = root.insert(c);
+			if (i == 0 && curr.getChild(c) == null) {
+				next = curr.insert(c);
 			} else if (i == 0) {
-				next = root.getChild(c);
+				next = curr.getChild(c);
 			} else if (i != 0 && next.getChild(c) == null) {
 				next = next.insert(c);
 			} else {
@@ -75,7 +76,6 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	 */
 	public int size()
 	{
-	    //TODO: Implement this method
 	    return 0;
 	}
 	
@@ -85,11 +85,12 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	@Override
 	public boolean isWord(String s) 
 	{	
+		TrieNode curr = root;
 		TrieNode next = new TrieNode();
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
 			if (i == 0) {
-				next = root.getChild(c);
+				next = curr.getChild(c);
 			} else {
 				next = next.getChild(c);
 			}
