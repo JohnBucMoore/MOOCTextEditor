@@ -38,9 +38,35 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	 * in the dictionary.
 	 */
 	public boolean addWord(String word)
-	{
-	    //TODO: Implement this method.
-	    return false;
+	{	
+		//check if the dictionary already contains the word
+		if (isWord(word)) {
+			return false;
+		} else if (word == null) {
+			throw new NullPointerException();
+		}
+		
+		word = word.toLowerCase();
+		TrieNode next = new TrieNode();
+		for (int i = 0; i < word.length(); i++) {
+			char c = word.charAt(i);
+			
+			if (i == 0 && root.getChild(c) == null) {
+				next = root.insert(c);
+			} else if (i == 0) {
+				next = root.getChild(c);
+			} else if (i != 0 && next.getChild(c) == null) {
+				next = next.insert(c);
+			} else {
+				next = next.getChild(c);
+			}
+			
+			//set end of word
+			if (i == word.length() - 1) {
+				next.setEndsWord(true);
+			}
+		}
+		return true;
 	}
 	
 	/** 
@@ -58,9 +84,21 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	 * described in the videos for this week. */
 	@Override
 	public boolean isWord(String s) 
-	{
-	    // TODO: Implement this method
-		return false;
+	{	
+		TrieNode next = new TrieNode();
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+			if (i == 0) {
+				next = root.getChild(c);
+			} else {
+				next = next.getChild(c);
+			}
+			
+			if (next == null) {
+				return false;
+			}
+		}
+		return (!s.equals("") && s.compareTo(next.getText()) == 0);
 	}
 
 	/** 
