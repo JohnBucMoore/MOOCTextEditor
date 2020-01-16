@@ -1,6 +1,7 @@
 package spelling;
 
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Collection;
 import java.util.HashMap;
@@ -120,6 +121,18 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 		return (!s.equals("") && s.compareTo(next.getText()) == 0);
 	}
 
+    public TrieNode getPrefix(String prefix) {
+   	 TrieNode curr = root;
+   	 for (int i = 0; i < prefix.length(); i++) {
+   		 char c = prefix.charAt(i);
+   		 if (curr.getChild(c) == null) {
+   			 return null;
+   		 }
+   		 curr = curr.getChild(c);
+   	 }
+   	 return curr;
+    }
+	
 	/** 
      * Return a list, in order of increasing (non-decreasing) word length,
      * containing the numCompletions shortest legal completions 
@@ -143,22 +156,35 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
      */@Override
      public List<String> predictCompletions(String prefix, int numCompletions) 
      {
-    	 // TODO: Implement this method
-    	 // This method should implement the following algorithm:
-    	 // 1. Find the stem in the trie.  If the stem does not appear in the trie, return an
-    	 //    empty list
-    	 // 2. Once the stem is found, perform a breadth first search to generate completions
-    	 //    using the following algorithm:
-    	 //    Create a queue (LinkedList) and add the node that completes the stem to the back
-    	 //       of the list.
-    	 //    Create a list of completions to return (initially empty)
-    	 //    While the queue is not empty and you don't have enough completions:
-    	 //       remove the first Node from the queue
-    	 //       If it is a word, add it to the completions list
-    	 //       Add all of its child nodes to the back of the queue
-    	 // Return the list of completions
+    	 List<String> completions = new LinkedList<String>();
+    	 TrieNode curr = getPrefix(prefix);
     	 
-         return null;
+    	 if (curr == null || numCompletions == 0) {
+    		 return completions;
+    	 }
+    	 //add TrieNodes to search next level if we complete our first level
+    	Queue< TrieNode > q = new LinkedList< TrieNode >();
+    	// add prefix node to q
+    	if (curr.endsWord()) {
+    		completions.add(curr.getText());
+    	}
+    	q.add(curr);
+    	while(!q.isEmpty()) {
+    		curr = q.remove();
+    		for (char c : curr.getValidNextCharacters()) {
+    			if (curr.getChild(c) != null) {
+    				q.add(curr.getChild(c));
+    				if (curr.getChild(c).endsWord()) {
+    					completions.add(curr.getChild(c).getText());
+    					if (completions.size() == numCompletions) {
+    						q.clear();
+    		    			return completions;
+    		    		}
+    				}
+    			}
+    		}
+   		}
+        return completions;
      }
 
  	// For debugging
